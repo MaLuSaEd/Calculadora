@@ -14,10 +14,11 @@ function discriminante(a,b,c){
 
 
 function calculadora(){
+    let mensajeInicial = "Ingresa el número de la función queres analizar:\n 1. Funcion Lineal y = mx + b \n 2. Función Cuadrática y = ax^2 + bx + c \n 3. Para salir";
     while(true){
         alert("Bienvenidx a la calculadora de funciones!");
 
-        let nro = prompt("Ingresa el número de la función queres analizar:\n 1. Funcion Lineal y = mx + b \n 2. Función Cuadrática y = ax^2 + bx + c \n 3. Para salir"); 
+        let nro = prompt(mensajeInicial); 
 
         nro = parseInt(nro);
 
@@ -25,7 +26,7 @@ function calculadora(){
 
         while(isNaN(nro) || (nro != 1 && nro != 2 && nro != 3)){
             alert("Entrada no valida, vuelva a intentarlo.");
-            nro = prompt("Ingresa el número de la función queres analizar:\n 1. Funcion Lineal y = mx + b \n 2. Función Cuadrática y = ax^2 + bx + c");
+            nro = prompt(mensajeInicial);
             nro = parseInt(nro);
         }
 
@@ -33,19 +34,9 @@ function calculadora(){
             alert("Elegiste funcion lineal y = mx + b, a continuación necesito:");
             let m = prompt("cual es valor de m (la pendiente) ?");
             m = parseFloat(m);
-            /*while(isNaN(m)){
-                alert("Entrada no valida, vuelva a intentarlo:");
-                m = prompt("cual es valor de m (la pendiente) ?");
-                m = parseFloat(m);
-            }*/
             m = validarNro(m, "cual es valor de m (la pendiente) ?");
             let b = prompt("cual es el valor de b (la ordenada al origen) ?");
             b = parseFloat(b);
-            /*while(isNaN(b)){
-                alert("Entrada no valida, vuelva a intentarlo:");
-                let b = prompt("cual es el valor de b (la ordenada al origen) ?");
-                b = parseFloat(b);
-            }*/
             b = validarNro(b , "cual es el valor de b (la ordenada al origen) ?")
             /* Calculo la raiz si tiene:*/
         
@@ -56,6 +47,33 @@ function calculadora(){
             } else {
                 let raiz = -b/m;
                 alert("La función ingresada es: y = " + m + "x + " + b +  "\n Por lo tanto la raíz de la función es: x = " + raiz + "\n Y su ordenada al origen es y = " + b );
+            }
+
+            /* Tabla de valores */
+
+            let quieroTabla = confirm("Calculamos algunos puntos de la funnción?");
+
+            if(quieroTabla){
+                let cuantosPuntos = prompt("Cuantos puntos querés calcular?");
+                cuantosPuntos = parseInt(cuantosPuntos);
+                while(!Number.isInteger(cuantosPuntos)){
+                    cuantosPuntos = prompt("Cuantos puntos querés calcular?");
+                    cuantosPuntos = parseInt(cuantosPuntos);
+                }
+                let x = [];
+
+                for(var i = 0; i < cuantosPuntos; i++){
+                    let tmp = prompt("Ingrese la coordenada x del punto número " + (i+1) + " que quiere calcular: ");
+                    while(isNaN(tmp)){
+                        tmp = prompt("Entrada no válida, ingrese la coordenada x del punto número " + (i+1) + "que quiere calcular: ");
+                    }
+                    x.push(tmp);
+                }
+
+                for(var i = 0; i < cuantosPuntos; i++){
+                    alert("El punto número " + (i+1) + " es: ( " + x[i] + " ; " + (m*x[i] + b) + " )"); 
+                }
+
             }
         
         }else if (nro == 2) { /*funcion cuadrática*/
@@ -83,7 +101,34 @@ function calculadora(){
                 alert("La función ingresada es y = " + a + "x^2 + " + b + "x + " + c + "\n veamos si tiene raices, para esto calculamos su discriminante: \n " + "b^2-4ac = " + discr + "\n como el discirminate es cero la función tiene una única raiz \n: " + "x = "+ r );
             } else {
                 alert("La función ingresada es y = " + a + "x^2 + " + b + "x + " + c + "\n veamos si tiene raices, para esto calculamos su discriminante: \n " + "b^2-4ac = " + discr + "\n como el discirminate es negativo la función no tiene raices reales." );
-            }  
+            }
+            
+            /* Tabla de valores */
+
+            let quieroTabla = confirm("Calculamos algunos puntos de la funnción?");
+
+            if(quieroTabla){
+                let cuantosPuntos = prompt("Cuantos puntos querés calcular?");
+                cuantosPuntos = parseInt(cuantosPuntos);
+                while(!Number.isInteger(cuantosPuntos)){
+                    cuantosPuntos = prompt("Cuantos puntos querés calcular?");
+                    cuantosPuntos = parseInt(cuantosPuntos);
+                }
+                let x = [];
+
+                for(var i = 0; i < cuantosPuntos; i++){
+                    let tmp = prompt("Ingrese la coordenada x del punto número " + (i+1) + " que quiere calcular: ");
+                    while(isNaN(tmp)){
+                        tmp = prompt("Entrada no válida, ingrese la coordenada x del punto número " + (i+1) + "que quiere calcular: ");
+                    }
+                    x.push(tmp);
+                }
+
+                for(var i = 0; i < cuantosPuntos; i++){
+                    alert("El punto número " + (i+1) + " es: ( " + x[i] + " ; " + (a*x[i]*x[i] + b*x[i] + c) + " )"); 
+                }
+
+            }
         
         } else {
             break;    

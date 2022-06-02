@@ -12,7 +12,6 @@ function discriminante(a,b,c){
 }
 
 
-
 function calculadora(){
     let mensajeInicial = "Ingresa el número de la función queres analizar:\n 1. Funcion Lineal y = mx + b \n 2. Función Cuadrática y = ax^2 + bx + c \n 3. Para salir";
     while(true){
@@ -62,7 +61,7 @@ function calculadora(){
                 }
                 let x = [];
 
-                for(var i = 0; i < cuantosPuntos; i++){
+                for(let i = 0; i < cuantosPuntos; i++){
                     let tmp = prompt("Ingrese la coordenada x del punto número " + (i+1) + " que quiere calcular: ");
                     while(isNaN(tmp)){
                         tmp = prompt("Entrada no válida, ingrese la coordenada x del punto número " + (i+1) + "que quiere calcular: ");
@@ -70,7 +69,7 @@ function calculadora(){
                     x.push(tmp);
                 }
 
-                for(var i = 0; i < cuantosPuntos; i++){
+                for(let i = 0; i < cuantosPuntos; i++){
                     alert("El punto número " + (i+1) + " es: ( " + x[i] + " ; " + (m*x[i] + b) + " )"); 
                 }
 
@@ -116,7 +115,7 @@ function calculadora(){
                 }
                 let x = [];
 
-                for(var i = 0; i < cuantosPuntos; i++){
+                for(let i = 0; i < cuantosPuntos; i++){
                     let tmp = prompt("Ingrese la coordenada x del punto número " + (i+1) + " que quiere calcular: ");
                     while(isNaN(tmp)){
                         tmp = prompt("Entrada no válida, ingrese la coordenada x del punto número " + (i+1) + "que quiere calcular: ");
@@ -124,7 +123,7 @@ function calculadora(){
                     x.push(tmp);
                 }
 
-                for(var i = 0; i < cuantosPuntos; i++){
+                for(let i = 0; i < cuantosPuntos; i++){
                     alert("El punto número " + (i+1) + " es: ( " + x[i] + " ; " + (a*x[i]*x[i] + b*x[i] + c) + " )"); 
                 }
 

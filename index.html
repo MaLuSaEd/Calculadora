@@ -5,10 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Funciones</title>
-    <script src="./main.js" defer></script>
-    <script src="./polinomio.js" defer></script>
+    <!-- ><script src="./main.js" defer></script>-->
+    <script  src="./polinomio.js" defer></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    
 </head>
 <body>
     
+    <section id="polinomios">
+        <h1>Polinomios</h1>
+        <!-- Ingreso de datos -->
+        <div id="signup">
+            <h3>Ingresa Polinomio:</h3>
+            <div >
+                <label for="P(x)">P(x) = </label>
+                <input type="text" id="input_poly" name="poly_crudo" placeholder="3x^2 - x^5 + 6" />
+                <small></small>
+            </div>
+            <button onclick = "cargar()">Cargar</button>
+        </div>
+
+        
+        
+    </section>
 </body>
 </html>

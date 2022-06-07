@@ -128,12 +128,13 @@ function cargar(){
     const polinomios = document.getElementById('polinomios');
     let poly_str = poly.value;
     poly_str = poly_str.replace(/\s+/g,''); // elimino todos los espacios
-    if(poly_str[0]=="+"){                          //elimino el + adelante de todo
-        let arr = poly_str.split("");
-        arr.shift();
-        poly_str = arr.join("");
-    }
+    
     if(validarInput(poly_str)){         //Si es entrada valida
+        if(poly_str[0]=="+"){                          //elimino el + adelante de todo
+            let arr = poly_str.split("");
+            arr.shift();
+            poly_str = arr.join("");
+        }
         let poli_obj = inputToPolinomio(poly_str);
         let p = document.createElement("p");
         p.classList.add("poli_" + i);
@@ -180,7 +181,11 @@ function validarInput(poly_str){
     }
 
     // No hay dos signos juntos:
-    
+    let signos_indices = poly_arr.reduce((c, v, i) => (v == "+" || v == "-") ? c.concat(i) : c, []);
+    for(let k = 1; k < signos_indices.length; k++){
+        (signos_indices[k] - signos_indices[k-1] != 1) ? res  : res =false;
+    }
+   
     
 
     return res;

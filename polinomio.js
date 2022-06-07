@@ -85,9 +85,14 @@ class Polinomio{
         for(let i  = 0 ; i<potencias.length; i++){
             if(i != 0 &&  this.coeffs[potencias[i]] > 0 ){
                 poly_str = poly_str.concat("+");
-                poly_str = poly_str.concat(this.coeffs[potencias[i]].toString());
+                if(this.coeffs[potencias[i]]!=1){
+                    poly_str = poly_str.concat(this.coeffs[potencias[i]].toString());
+                }
+                
             }else{
-                poly_str = poly_str.concat(this.coeffs[potencias[i]].toString());
+                if(this.coeffs[potencias[i]]!=1){
+                    poly_str = poly_str.concat(this.coeffs[potencias[i]].toString());
+                }
             }
 
 
@@ -97,8 +102,9 @@ class Polinomio{
                 if(this.grado == 0){}
                 
             }else{
-                poly_str = poly_str.concat("x^");
+                poly_str = poly_str.concat("x^{");
                 poly_str = poly_str.concat(potencias[i].toString());
+                poly_str = poly_str.concat("}");
             }  
         }
 

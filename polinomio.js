@@ -154,6 +154,7 @@ function cargar(){
     const poly = document.getElementById('input_poly');     // capturo el bloque donde va a estar el input
     const polinomios = document.getElementById('polinomios');   // capturo la seccion polinomios
     let poly_str = poly.value;                                  // guardo el valor del input como poly_str (el polinomio en forma de string)
+    poly.value = ""; // reseteo el input
     poly_str = poly_str.replace(/\s+/g,''); // elimino todos los espacios
     
     if(validarInput(poly_str)){         //Verifico si el string representa a un polinomio

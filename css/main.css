@@ -1,0 +1,17 @@
+#polinomios {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2em; }
+  #polinomios .titulo {
+    font-size: 4em;
+    margin-bottom: 0.2em; }
+  #polinomios #signup {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: center;
+    align-items: center; }
+  #polinomios .poli {
+    border: dashed 0.3em #41403E; }

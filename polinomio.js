@@ -146,11 +146,14 @@ class Polinomio{
 
 let i = 1; // numera cada polinomio ingresado
 
+let polinomios_cargados = [] // lista donde agrego los polinomios que carga el usuario
+
 let btn_cargar_polnomio = document.getElementById("cargar_Polinomio"); // capturo el boton de carga de polinomios
 
 btn_cargar_polnomio.addEventListener('click', () => cargar()); // Le asigno al btn la funcion cargar cuando se clickea
 
 function cargar(){
+    
     const poly = document.getElementById('input_poly');     // capturo el bloque donde va a estar el input
     const polinomios = document.getElementById('polinomios');   // capturo la seccion polinomios
     let poly_str = poly.value;                                  // guardo el valor del input como poly_str (el polinomio en forma de string)
@@ -164,12 +167,13 @@ function cargar(){
             poly_str = arr.join("");
         }
         let poly_obj = inputToPolinomio(poly_str);  // paso el string que representa a u polinomio a un objeto de la clase polinomio
-
+        polinomios_cargados.push(poly_obj);
 
         // ---- creo un div de con id poli_i------//
 
         let div = document.createElement("div");
-        div.setAttribute("id", "poli_"+i)
+        div.setAttribute("id", "poli_"+i);
+        div.className = "poli";
         
         polinomios.appendChild(div);
         //-------- creo un parrafo <p></p> y le asigno la clase poli_i (donde i cuenta la cantidad de polinomios) ---//
@@ -194,6 +198,7 @@ function cargar(){
 //Funcion que dado un string valido lo convierte en un polinomio de la clase polinomio
 
 function validarInput(poly_str){
+    let msj_error = "";
     let res = true;                         //inicializo la salida como true, solo la voy a cambiar si algo no cumple con la validacion
     let poly_arr = poly_str.split("");      //separo el  string por caracter en forma de un array
 
@@ -203,39 +208,120 @@ function validarInput(poly_str){
 
     //Verifico que no sea una entrada vacía
 
-    res = (poly_str=="")? false : true;
+
+    if(poly_str ==""){
+        res = false; 
+        msj_error  = msj_error.concat("Entrada vacía");
+        console.log(msj_error);
+    }
     
     
     //Verifico que todos los caracteres de poly_str sean validos:
 
-    for(let i = 0 ; i < poly_arr.length; i++){      
-        res =  char_validos.includes(poly_arr[i]) ? true :  false;     // si algun elemento de poly_arr no esta en char_validos, la entrada es no valida.
+    for(let i = 0 ; i < poly_arr.length; i++){
+        if(!char_validos.includes(poly_arr[i])){
+            res = false;
+            msj_error = msj_error.concat("\n");
+            msj_error = msj_error.concat("Hay caractereres no validos");
+        }      
+         
     }
 
     //Toda potencia(^) tiene una x antes y un numero despues.
     let pwd_indices = poly_arr.reduce((c, v, i) => v =="^" ? c.concat(i) : c, []);  // busco los indices de poly_arr donde esta "^"
     for(let j = 0; j < pwd_indices.length; j++){
-        char_nros.includes(poly_arr[pwd_indices[j]+1]) ? res : res = false; //si despues de ^ no hay un numero, la entrada no es valida
-        res = (poly_arr[pwd_indices[j]-1] == "x") ? true : false;    // si antes de ^ no esta x, la entrada no es valida
+        if(!char_nros.includes(poly_arr[pwd_indices[j]+1])){
+            res = false;
+            msj_error = msj_error.concat("\n");
+            msj_error = msj_error.concat("Despues de ^ no hay un numero, la entrada no es valida");
+        }
+
+        if(!(poly_arr[pwd_indices[j]-1] == "x")){
+            res = false;    // si antes de ^ no esta x, la entrada no es valida
+            msj_error = msj_error.concat("\n");
+            msj_error = msj_error.concat("Antes de ^ no esta x, la entrada no es valida");
+        }
+         
     }
     //Toda puntito (.) tiene un nro antes y un nro despues.
     let puntito_indices = poly_arr.reduce((c, v, i) => v =="." ? c.concat(i) : c, []); //busco los indices de poly_arr donde esta "."
     for(let j = 0; j < puntito_indices.length; j++){
-        res = char_nros.includes(poly_arr[puntito_indices[j]+1]) ? true : false;     // si despues de "." no hay un numero la entrada no es valida
-        res = char_nros.includes(poly_arr[puntito_indices[j]-1]) ? true : false;     // si antes de "." no hay un numero la entrada no es valida
+
+        if(!char_nros.includes(poly_arr[puntito_indices[j]+1])){
+            res  = false;
+            msj_error = msj_error.concat("\n");
+            msj_error = msj_error.concat("Despues de '.' no hay un numero la entrada no es valida");
+        }
+       
+        if(!char_nros.includes(poly_arr[puntito_indices[j]-1])){
+            res  = false;
+            msj_error = msj_error.concat("\n");
+            msj_error = msj_error.concat("Antes de '.' no hay un numero la entrada no es valida");
+        }
     }
 
     // No hay dos signos juntos:
     let signos_indices = poly_arr.reduce((c, v, i) => (v == "+" || v == "-") ? c.concat(i) : c, []);    //busco los indices de poly_arr donde hay o un "+" o un "-"
     for(let k = 1; k < signos_indices.length; k++){
-        res = (signos_indices[k] - signos_indices[k-1] != 1) ? true  : false;     // verifico que no haya dos signos seguidos.
+        if(signos_indices[k] - signos_indices[k-1] == 1){
+            res = false;
+            msj_error = msj_error.concat("\n");
+            msj_error = msj_error.concat("Hay dos signos seguidos, la entrada no es valida")
+        }
     }
    
-    // Falta verificar que todas las potencias sean numeros enteros//
-    //-------------------------------------------------------------//
-    //------------------------------------------------------------//
+    // Verifico que todas las potencias sean numeros enteros//
+    
+    for(let j of pwd_indices){
+        
+        let s = signos_indices.find(i => i > j);
+        
+        if(s === undefined){
+            for(let k = j+1 ; k < poly_arr.length; k++ ){
+                if(!char_nros.includes(poly_arr[k])){
+                    res = false;
+                    msj_error = msj_error.concat("\n");
+                    msj_error = msj_error.concat("Hay una potencia que no es entera, la entrada no es valida")
+                }
+            }
+        }else{
+            for(let k = j+1 ; k < s; k++ ){
+                if(!char_nros.includes(poly_arr[k])){
+                    res = false;
+                    msj_error = msj_error.concat("\n");
+                    msj_error = msj_error.concat("Hay una potencia que no es entera, la entrada no es valida")
+                }
+            }
+        }
+    }
+    //----------Verifico que un numero decimal no tenga mas de un '.'---------------------//
+    
+    for(let p of puntito_indices){
+        
+        let s = signos_indices.find(i => i > p);
+        
+        if(s === undefined){
+            for(let k = p+1 ; k < poly_arr.length; k++ ){
+                if(!char_nros.includes(poly_arr[k])){
+                    res = false;
+                    msj_error = msj_error.concat("\n");
+                    msj_error = msj_error.concat("Hay mas de un '.' en un numero, la entrada no es valida")
+                }
+            }
+        }else{
+            for(let k = p+1 ; k < s; k++ ){
+                if(!char_nros.includes(poly_arr[k])){
+                    res = false;
+                    msj_error = msj_error.concat("\n");
+                    msj_error = msj_error.concat("Hay mas de un '.' en un numero, la entrada no es valida")
+                }
+            }
+        }
+    }
+
+
     if(res == false){
-        alert("Entrada no valida!!")
+        alert(msj_error);
     }
     return res;
 }

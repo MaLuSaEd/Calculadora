@@ -231,8 +231,13 @@ function raicesRacionales(poly_obj){
     const divisores_indep = divisores(coef_indep);
     const divisores_ppal = divisores(coef_ppal);
 
+    const posibles_raices = divisionEntreListas(divisores_indep,divisores_ppal);
 
-    
+    for(const r of posibles_raices){
+        poly_obj.evaluar(r) == 0? res[r] = 1 : true;
+        poly_obj.evaluar(-r) == 0? res[-r] = 1 : true;
+    }
+
     return res;
 
 

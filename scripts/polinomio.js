@@ -205,6 +205,16 @@ function inputToPolinomio(poly_str){
     return poly_obj;
 }
 
+//------------Funcion que verifica que el polinomio tiene coeficientes enteros----------------//
+function coeficientesEnteros(poly_obj){
+    let res = true;
+    let potencias = Object.keys(poly_obj.coeffs);
+    for(p of potencias){
+        Number.isInteger(poly_obj.coeffs[p]) ? res &= true : res &= false;
+    }
+    return res;
+}
+
 //---------------Gauss, para buscar raices racionales de polinomio de coeficientes enteros---------------------------//
 
 function raicesRacionales(poly_obj){
@@ -396,13 +406,10 @@ class Polinomio{
         return res;
     }
 
-    coeficientesEnteros(){
-            let res = true;
-            let potencias = Object.keys(this.coeffs);
-            for(p of potencias){
-                Number.isInteger(this.coeffs[p]) ? res &= true : res &= false;
-            }
-            return res;
+    raices(){
+        let res = {};
+        
+        return res;
     }
   
 }

@@ -14,4 +14,8 @@
     justify-content: center;
     align-items: center; }
   #polinomios .poli {
+    width: 80%;
+    height: 27em;
     border: dashed 0.3em #41403E; }
+  #polinomios .graph {
+    height: 60%; }

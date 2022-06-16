@@ -222,9 +222,9 @@ function raicesRacionales(poly_obj){
     let n = poly_obj.grado;
     let coef_ppal = poly_obj.coeffs[n];
     let coef_indep;
-    if(poly_obj.coeffs[0] === undefined){ 
+    if(poly_obj.coeffs[0] == 0){ 
         // Si coef_indep == 0 --> una raiz es cero, busco la multiplicidad de esta raiz:
-        let grado_minimo = Object.keys(poly_obj.coeffs)[0];
+        let grado_minimo = Object.keys(poly_obj.coeffs)[1];
         res[0] = grado_minimo;
         // Saco factor comun la x de menor grado:
         let potencias = Object.keys(poly_obj.coeffs);
@@ -244,8 +244,24 @@ function raicesRacionales(poly_obj){
     const posibles_raices = divisionEntreListas(divisores_indep,divisores_ppal);
 
     for(const r of posibles_raices){
-        poly_obj.evaluar(r) == 0? res[r] = 1 : true;
-        poly_obj.evaluar(-r) == 0? res[-r] = 1 : true;
+        if(poly_obj.evaluar(r) == 0){
+            let multiplicidad = 1;
+            let p_deriv = poly_obj.derivada();
+            while(p_deriv.evaluar(r) == 0 ){
+                multiplicidad += 1;
+                p_deriv = p_deriv.derivada();
+            }
+            res[r] = multiplicidad;
+        }
+        if(poly_obj.evaluar(-r) == 0){
+            let multiplicidad = 1;
+            let p_deriv = poly_obj.derivada();
+            while(p_deriv.evaluar(-r) == 0 ){
+                multiplicidad += 1;
+                p_deriv = p_deriv.derivada();
+            }
+            res[-r] = multiplicidad;
+        }
     }
 
     return res;
@@ -275,7 +291,51 @@ function divisionEntreListas(lsA, lsB){
     res = [...new Set(res)];
     return res;
 }
+//--------Ruffini---------------Cociente de hacer P(x):(x-r)----------//
+function ruffini(poly_obj, r){
+    const coeff_completos = poly_obj.completarCoeffs();
+    const n = poly_obj.grado;
+    let coeff_cociente = {};
+    coeff_cociente[n-1] = coeff_completos[n];
+    for(let p = n-2; p >= 0; p--){
+        coeff_cociente[p] = coeff_cociente[p+1]*r + coeff_completos[p+1];
+    }
+    return new Polinomio(coeff_cociente);
+}
+//-------------------------Factorizada - String ---------------------------//
 
+function strFactorizada(poly_obj){
+    let res = "";
+    let rs = poly_obj.raices();
+    for(let [raiz, mult] of Object.entries(rs)){
+        let tmp = "";
+        if(raiz < 0){
+            tmp = "(x + " + -raiz +")";
+        }else if(raiz == 0){
+            tmp = "x";
+        }else{
+            tmp = "(x - " + raiz +")";
+        }
+        if(mult > 1){
+            tmp = tmp + "^{" + mult + "}";
+        }
+        res = res.concat(tmp);
+        while(mult != 0){
+            poly_obj = ruffini(poly_obj,raiz);
+            mult--;
+        }
+      }
+      const str_sinRaices = poly_obj.poliToString(); 
+      
+      if(str_sinRaices.length == 1){
+        if(str_sinRaices != '1'){
+            res = str_sinRaices + res;
+        }
+      }else{
+        res = res + "(" + str_sinRaices + ")";
+      }
+    return res;
+}
 
 //--------------------------------- Clase Polinomio--------------------------------------------------------//
 
@@ -392,8 +452,6 @@ class Polinomio{
         if (poly_str == ""){
             poly_str = poly_str.concat("0");
         }
-
-
         return poly_str;
     }
 
@@ -406,11 +464,68 @@ class Polinomio{
         return res;
     }
 
+
+    derivada(){
+        let coef_deriv = {};
+        const potencias = Object.keys(this.coeffs);
+        for(let p of potencias){
+            if( p != 0){
+                coef_deriv[p-1] = p*this.coeffs[p];
+            }
+        }
+        return new Polinomio(coef_deriv);
+    }
+
     raices(){
         let res = {};
+
+        if(this.grado == 1){
+            if(Object.keys(this.coeffs) == 1){
+                res[0] = 1;
+            }else{
+                const raiz = -(this.coeffs[0]/this.coeffs[1]);
+                res[raiz] = 1;
+            } 
+        }else if(this.grado == 2){
+            let a,b,c;
+            this.coeffs[0] == undefined?  c = 0 : c = this.coeffs[0];
+            this.coeffs[1] == undefined?  b = 0 : b = this.coeffs[1];
+            a = this.coeffs[2];
+            if(b == 0){
+                if(c == 0){
+                    res[0] = 2;
+                }else{
+                    if(a*c < 0){
+                        const r1 = Math.sqrt(-(c/a));
+                        const r2 = -r1;
+                        res[r1] = 1;
+                        res[r2] = 1; 
+                    }
+                }
+            }else if(b != 0 && c == 0){
+                res[0] = 1;
+                const r = -b/a;
+                res[r] = 1;
+            }else{
+                const DELTA = b*b - 4*a*c;
+                if(DELTA > 0){
+                    const r1 = (-b + DELTA)/(2*a);
+                    const r2 = (-b - DELTA)/(2*a);
+                    res[r1] = 1;
+                    res[r2] = 1;
+                }else if (DELTA == 0){
+                    const r = -b/(2*a);
+                    res[r] = 2;
+                }
+            }
+        }else{
+            res = raicesRacionales(this);
+        }
         
         return res;
     }
+
+    
   
 }
 
@@ -471,10 +586,26 @@ function cargar(){
         let propiedades = document.createTextNode("El grado de P" + "\\(_{" + i +"}\\)(x)" + " es " +  poly_obj.grado  );
         p2.appendChild(propiedades);
         div.appendChild(p2);
+        let p3 = document.createElement("p");
+        p3.classList.add("poli_" + i);
+        let derivada = document.createTextNode("P'" + "\\(_{" + i +"}\\)(x) = " + "\\( " +  poly_obj.derivada().poliToString() + " \\) "  );
+        p3.appendChild(derivada);
+        div.appendChild(p3);
+        let p4 = document.createElement("p");
+        p4.classList.add("poli_" + i);
+        let factorizada = document.createTextNode("P" + "\\(_{" + i + "}\\)" + "(x) = " +  "\\( " + strFactorizada(poly_obj) +" \\)  " );
+        p4.appendChild(factorizada);
+        div.appendChild(p4);
+
+
+        
+        let div_graph = document.createElement("div");
+        div_graph.setAttribute("id","poli_"+i+"_graph");
+        div_graph.className = "graph";
+        div.appendChild(div_graph);
+        let calculator = Desmos.GraphingCalculator(div_graph);
+        calculator.setExpression({ id: 'graph1', latex: poly_str });
         MathJax.typesetPromise();
         i++;
     }
 }
-
-
-

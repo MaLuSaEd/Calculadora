@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Funciones</title>
     <link rel="stylesheet" href="./styles/main.css">
-    <!--script src="./scripts/main.js" type="module" defer></script-->
-    <script  src="./scripts/polinomio.js" defer></script>
+    <script  src="./scripts/main.js" type="module" defer></script>
     <script src="https://www.desmos.com/api/v1.7/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async
@@ -15,18 +14,68 @@
     </script>
 </head>
 <body>
+
+    <section id ="home"> 
+        <h1 class="titulo"> Calculadora de funciones</h1>
+        <p class = "home-parrafo"> Bienvenidx a la calculadora de funciones, esta herramienta esta destinada a estudiantes que quieran dar sus primeros pasos en el
+            analisis de funciones. ¿Qué es una función?, ¿qué significa el dominio de una funcion?, ¿cuál es la diferencia entre un minimo local y un minimo global?, ¿cuáles son los distintos tipos de conjuntos que me conviene definir para estudiar el comportamiento de una función? ¿cuál es la realcion entre una función y su derivada? 
+        </p>
+        <p class = "home-parrafo"> Estas son el tipo de preguntas que esperamos responder y generar una base para luego afrontar problemas mas difíciles.</p>
+
+        <section class="home-definiciones">
+
+            <p class="home-parrafo">
+                Veamos algunas definiciones que usaremos para efectuar nuestro analisis:
+            </p>
+
+            <ul class="home-definiciones home-parrafo">
+                <li class="definicion">Dominio = \(\{x\ \in\ \mathbb{R}:\ f(x)\ \in \mathbb{R} \}\), el conjunto de valores de x donde la funcion está definida.</li>
+                <li class="definicion">\(C_{0} = \{x\ \in \mathbb{R}:\ f(x) = 0 \}\),  el conjunto de valores de x donde la función vale 0.</li>
+                <li class="definicion">\(C^{+} = \{x\ \in \mathbb{R}:\ f(x) > 0 \} \), el conjunto de valores de x donde la función es positiva.</li>
+                <li class="definicion">\(C^{-} = \{x\ \in \mathbb{R}:\ f(x) < 0 \} \), el conjunto de valores de x donde la función es negativa.</li>
+            </ul>
+
+        </section>
+        
+    </section>
     
     <section id="polinomios" >
-        <h1 class="titulo">Polinomios</h1>
+        <h2 class="titulo">Polinomios</h2>
+        <div class="polinomios">
+            <div class="polinomios-definicion">
+                Definición: Un polinomio es una suma de monomios, donde un monomio tiene la siguiente estructura:
+
+                $$ a\cdot x^{n}\ con\ a \in \mathbb{R}\ , n \in \mathbb{N_{0}} $$
+            </div>
+
+            <div class="polinomios-ejemplos">
+
+            </div>
+        </div>
         <!-- Ingreso de datos -->
-        <div id="signup">
-            <h3>Ingresa Polinomio:</h3>
-            <div >
+        <div id="signup" class = "input">
+            <div class = "input_encabezado">
+                <h3>Ingresa Polinomio:</h3>
                 <label for="P(x)">P(x) = </label>
                 <input type="text" id="input_poly" name="poly_crudo" placeholder="3x^2 - x^5 + 6" />
-                <small></small>
             </div>
-            <button id = "cargar_Polinomio" >Cargar</button>
+            <div class = "input_opciones">
+                <h3>Opciones:</h3>
+                <label for="C_0">  \( C_{0} \)</label>
+                <input type="checkbox" id="C_0" name="C_0" value="C_0">
+                <label for="C_+">  \(C^{+}\)</label>
+                <input type="checkbox" id="C_+" name="C_+" value="C_+">
+                <label for="C_-"> \(C^{-}\)</label>
+                <input type="checkbox" id="C_-" name="C_-" value="C_-">
+                <label for="Grafico"> Gráfico</label>
+                <input type="checkbox" id="Grafico" name="Grafico" value="Grafico">
+                <label for="Derivada"> Derivada</label>
+                <input type="checkbox" id="Derivada" name="Derivada" value="Derivada">
+                <label for="Factorizada"> Factorizada</label>
+                <input type="checkbox" id="Factorizada" name="Factorizada" value="Factorizada">
+                
+            </div>
+            <button id = "cargar_Polinomio">Cargar</button>
         </div>
 
         

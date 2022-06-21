@@ -1,21 +1,60 @@
-#polinomios {
+body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0.2em; }
+  gap: 0;
+  background-color: #C0C5C1; }
+
+#home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0em;
+  width: 80%; }
+  #home .titulo {
+    font-size: 4em; }
+  #home .home-parrafo {
+    font-size: 1.5em; }
+  #home .home-definiciones {
+    width: 100%; }
+
+#polinomios {
+  background-color: #7D8491;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  font-size: 1.5em; }
   #polinomios .titulo {
-    font-size: 4em;
+    font-size: 3em;
     margin-bottom: 0.2em; }
-  #polinomios #signup {
+  #polinomios .input {
     display: flex;
-    flex-direction: row;
-    gap: 1em;
+    flex-direction: column;
+    gap: 0em;
     justify-content: center;
     align-items: center; }
+    #polinomios .input_encabezado {
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+      justify-content: center;
+      align-items: center; }
+    #polinomios .input_opciones {
+      display: flex;
+      flex-direction: row;
+      gap: 0.4em;
+      justify-content: center;
+      align-items: center; }
   #polinomios .poli {
     width: 80%;
     height: 27em;
     border: dashed 0.3em #41403E; }
   #polinomios .graph {
     height: 60%; }
+  #polinomios .polinomios {
+    width: 80%; }

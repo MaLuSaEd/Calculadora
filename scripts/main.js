@@ -3,7 +3,6 @@ import {Polinomio} from "../scripts/polinomio_class.js";
 //Funcion que dado un string valida si representa un objeto de la clase polinomio
 
 function validarInput(poly_str){
-    let msj_error = "";
     let res = true;                         //inicializo la salida como true, solo la voy a cambiar si algo no cumple con la validacion
     let poly_arr = poly_str.split("");      //separo el  string por caracter en forma de un array
 
@@ -15,9 +14,12 @@ function validarInput(poly_str){
 
 
     if(poly_str ==""){
-        res = false; 
-        msj_error  = msj_error.concat("Entrada vacía");
-        console.log(msj_error);
+        res = false;
+        iziToast.show({
+            title: 'Input no valido',
+            message: 'Entrada vacia',
+            position: 'topRight' 
+        });
     }
     
     
@@ -26,8 +28,11 @@ function validarInput(poly_str){
     for(let i = 0 ; i < poly_arr.length; i++){
         if(!char_validos.includes(poly_arr[i])){
             res = false;
-            msj_error = msj_error.concat("\n");
-            msj_error = msj_error.concat("Hay caractereres no validos");
+            iziToast.show({
+                title: 'Input no valido',
+                message: "Hay caractereres no validos",
+                position: 'topRight' 
+            });
         }      
          
     }
@@ -37,14 +42,21 @@ function validarInput(poly_str){
     for(let j = 0; j < pwd_indices.length; j++){
         if(!char_nros.includes(poly_arr[pwd_indices[j]+1])){
             res = false;
-            msj_error = msj_error.concat("\n");
-            msj_error = msj_error.concat("Despues de ^ no hay un numero, la entrada no es valida");
+            iziToast.show({
+                title: 'Input no valido',
+                message: "Despues de ^ no hay un numero, la entrada no es valida",
+                position: 'topRight' 
+            });
+            
         }
 
         if(!(poly_arr[pwd_indices[j]-1] == "x")){
             res = false;    // si antes de ^ no esta x, la entrada no es valida
-            msj_error = msj_error.concat("\n");
-            msj_error = msj_error.concat("Antes de ^ no esta x, la entrada no es valida");
+            iziToast.show({
+                title: 'Input no valido',
+                message: "Antes de ^ no esta x, la entrada no es valida",
+                position: 'topRight' 
+            });
         }
          
     }
@@ -54,14 +66,20 @@ function validarInput(poly_str){
 
         if(!char_nros.includes(poly_arr[puntito_indices[j]+1])){
             res  = false;
-            msj_error = msj_error.concat("\n");
-            msj_error = msj_error.concat("Despues de '.' no hay un numero la entrada no es valida");
+            iziToast.show({
+                title: 'Input no valido',
+                message: "Despues de '.' no hay un numero la entrada no es valida",
+                position: 'topRight' 
+            });
         }
        
         if(!char_nros.includes(poly_arr[puntito_indices[j]-1])){
             res  = false;
-            msj_error = msj_error.concat("\n");
-            msj_error = msj_error.concat("Antes de '.' no hay un numero la entrada no es valida");
+            iziToast.show({
+                title: 'Input no valido',
+                message: "Antes de '.' no hay un numero la entrada no es valida",
+                position: 'topRight' 
+            });
         }
     }
 
@@ -70,8 +88,12 @@ function validarInput(poly_str){
     for(let k = 1; k < signos_indices.length; k++){
         if(signos_indices[k] - signos_indices[k-1] == 1){
             res = false;
-            msj_error = msj_error.concat("\n");
-            msj_error = msj_error.concat("Hay dos signos seguidos, la entrada no es valida")
+            iziToast.show({
+                title: 'Input no valido',
+                message: "Hay dos signos seguidos, la entrada no es valida",
+                position: 'topRight' 
+
+            });
         }
     }
    
@@ -85,16 +107,22 @@ function validarInput(poly_str){
             for(let k = j+1 ; k < poly_arr.length; k++ ){
                 if(!char_nros.includes(poly_arr[k])){
                     res = false;
-                    msj_error = msj_error.concat("\n");
-                    msj_error = msj_error.concat("Hay una potencia que no es entera, la entrada no es valida")
+                    iziToast.show({
+                        title: 'Input no valido',
+                        message: "Hay una potencia que no es entera, la entrada no es valida",
+                        position: 'topRight' 
+                    });
                 }
             }
         }else{
             for(let k = j+1 ; k < s; k++ ){
                 if(!char_nros.includes(poly_arr[k])){
                     res = false;
-                    msj_error = msj_error.concat("\n");
-                    msj_error = msj_error.concat("Hay una potencia que no es entera, la entrada no es valida")
+                    iziToast.show({
+                        title: 'Input no valido',
+                        message: "Hay una potencia que no es entera, la entrada no es valida",
+                        position: 'topRight' 
+                    });
                 }
             }
         }
@@ -109,25 +137,27 @@ function validarInput(poly_str){
             for(let k = p+1 ; k < poly_arr.length; k++ ){
                 if(!char_nros.includes(poly_arr[k])){
                     res = false;
-                    msj_error = msj_error.concat("\n");
-                    msj_error = msj_error.concat("Hay mas de un '.' en un numero, la entrada no es valida")
+                    iziToast.show({
+                        title: 'Input no valido',
+                        message: "Hay mas de un '.' en un numero, la entrada no es valida",
+                        position: 'topRight' 
+                    });
                 }
             }
         }else{
             for(let k = p+1 ; k < s; k++ ){
                 if(!char_nros.includes(poly_arr[k])){
                     res = false;
-                    msj_error = msj_error.concat("\n");
-                    msj_error = msj_error.concat("Hay mas de un '.' en un numero, la entrada no es valida")
+                    iziToast.show({
+                        title: 'Input no valido',
+                        message: "Hay mas de un '.' en un numero, la entrada no es valida",
+                        position: 'topRight' 
+                    });
                 }
             }
         }
     }
 
-
-    if(res == false){
-        console.table(msj_error);
-    }
     return res;
 }
 
@@ -283,7 +313,7 @@ function cargar(){
     
 
     const poly = document.getElementById('input_poly');     // capturo el bloque donde va a estar el input
-    const polinomios = document.getElementById('polinomios');   // capturo la seccion polinomios
+    const polinomios = document.getElementById('polinomios-ingresados');   // capturo la seccion polinomios
     let poly_str = poly.value;                                  // guardo el valor del input como poly_str (el polinomio en forma de string)
     //poly.value = ""; // reseteo el input
     poly_str = poly_str.replace(/\s+/g,''); // elimino todos los espacios
@@ -308,8 +338,8 @@ function cargar(){
         let div = document.createElement("div");
         div.setAttribute("id", "poli_"+i);
         div.className = "poli";
-        
-        polinomios.appendChild(div);
+        polinomios.insertAdjacentElement("afterbegin", div);
+        //polinomios.appendChild(div);
         //-------- creo un parrafo <p></p> y le asigno la clase poli_i (donde i cuenta la cantidad de polinomios) ---//
        
         let p = document.createElement("p");    
@@ -347,3 +377,4 @@ function cargar(){
         i++;
     }
 }
+

@@ -1,3 +1,7 @@
+* {
+  margin: 0;
+  padding: 0; }
+
 body {
   display: flex;
   flex-direction: column;
@@ -58,3 +62,10 @@ body {
     height: 60%; }
   #polinomios .polinomios {
     width: 80%; }
+  #polinomios-ingresados {
+    display: flex;
+    flex-direction: column;
+    gap: 0em;
+    justify-content: center;
+    align-items: center;
+    width: 100%; }

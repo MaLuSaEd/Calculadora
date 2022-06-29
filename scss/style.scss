@@ -38,7 +38,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0;
+    gap: 0.1em;
     width: 100%;
     font-size: 1.5em;
 
@@ -49,10 +49,10 @@ body{
 
     .input{
         display: flex;
-        flex-direction: column;
-        gap: 0em;
+        flex-direction: row;
+        gap: 1em;
         justify-content: center;
-        align-items: center;
+        align-items: normal;
         &_encabezado{
             display: flex;
             flex-direction: row;
@@ -62,10 +62,11 @@ body{
         }
         &_opciones{
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             gap: 0.4em;
             justify-content: center;
-            align-items: center;
+            align-items: end;
+            font-size: 1rem;
         }
     }
 
@@ -73,10 +74,15 @@ body{
         width: 80%;
         height: 27em;
         border:dashed 0.3em #41403E;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
     }
 
     .graph{
         height: 60%;
+        width: 80%;
     }
 
     .polinomios{

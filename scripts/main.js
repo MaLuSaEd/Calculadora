@@ -350,17 +350,41 @@ function cargar(){
         p.appendChild(poly_text);
         div.appendChild(p);
 
+        if(C0){
+            let p_raices = document.createElement("p");
+            p_raices.classList.add("poli_" + i);
+            let C0_text = "";
+            let raices = Object.keys(poly_obj.raices());
+            for(const r of raices){
+                if(C0_text == ""){
+                    C0_text = C0_text + r;
+                }else{
+                    C0_text = C0_text  + ", " + r;
+                }
+            }
+
+            if(C0_text == ""){
+                C0_text = C0_text + "\\( C_{0} = \\emptyset  \\)";
+            }else{
+                C0_text =  "\\( C_{0} =  \\)" + "{" + C0_text + "}";
+            }
+            console.log(C0_text)
+            let ceros = document.createTextNode(C0_text);
+            p_raices.appendChild(ceros);
+            div.appendChild(p_raices);
+        }
+
         if(factorizada){
             let p4 = document.createElement("p");
             p4.classList.add("poli_" + i);
-            let facto = document.createTextNode("La forma factorizada de P(x) es " +"P" +  "\\(_{" + i + "}\\)" + "(x) = " +  "\\( " + strFactorizada(poly_obj) +" \\)  " );
+            let facto = document.createTextNode("La forma factorizada de P"+ "\\(_{" + i +"}\\)(x) " + "es " +"P" +  "\\(_{" + i + "}\\)" + "(x) = " +  "\\( " + strFactorizada(poly_obj) +" \\)  " );
             p4.appendChild(facto);
             div.appendChild(p4);
         }
         if(derivada){
             let p3 = document.createElement("p");
             p3.classList.add("poli_" + i);
-            let derivada = document.createTextNode("La derivada de P(x) es " + "P'" + "\\(_{" + i +"}\\)(x) = " + "\\( " +  poly_obj.derivada().poliToString() + " \\) "  );
+            let derivada = document.createTextNode("La derivada de P"+ "\\(_{" + i +"}\\)(x) " + "es " + "P'" + "\\(_{" + i +"}\\)(x) = " + "\\( " +  poly_obj.derivada().poliToString() + " \\) "  );
             p3.appendChild(derivada);
             div.appendChild(p3);
         }
@@ -372,9 +396,17 @@ function cargar(){
             div.appendChild(div_graph);
             let calculator = Desmos.GraphingCalculator(div_graph, {expressions: false});
             calculator.setExpression({ id: 'graph1', latex: "P" + "_{" + i + "}" + "(x) = " + poly_str });
-        }    
+        }else{
+            document.getElementById("poli_"+i).style.height = "auto";
+        }
+
         MathJax.typesetPromise();
         i++;
     }
+   
 }
 
+
+fetch('ejemplos.json')
+    .then((resp)=>(resp.json()))
+    .then((data) => console.log(data))

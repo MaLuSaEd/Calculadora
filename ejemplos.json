@@ -1,6 +1,6 @@
 [
-    {"x": "x" , "coeffs": "{0: 1}", "grado": "0"},
-    {"x": "x" , "coeffs": "{1: 1}", "grado": "1"},
-    {"x": "x" , "coeffs": "{2: 1}", "grado": "2"},
-    {"x": "x" , "coeffs": "{2: 1, 0:-1}", "grado": "2"}
+    { "grado": 0 , "coeffs": {"0": 1} },
+    { "grado": 1, "coeffs": {"1": 1} },
+    { "grado": 2, "coeffs": {"2": 1} },
+    { "grado": 2, "coeffs": {"2": 1, "0":-1}}
 ]

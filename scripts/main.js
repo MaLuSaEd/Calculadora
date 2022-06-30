@@ -405,8 +405,16 @@ function cargar(){
     }
    
 }
-
-
+let polinomios_ejemplos = [] // lista donde agrego los polinomios que carga el usuario
 fetch('ejemplos.json')
     .then((resp)=>(resp.json()))
-    .then((data) => console.log(data))
+    .then((data) => {
+        for(let i = 0; i < data.length; i++){
+            let p = new Polinomio(data[i].coeffs);
+            polinomios_ejemplos.push(p);
+        }
+    }
+)
+
+
+

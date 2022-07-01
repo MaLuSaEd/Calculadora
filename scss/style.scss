@@ -20,6 +20,7 @@ body{
     align-items: center;
     gap: 0em;
     width: 80%;
+    height: auto;
     .titulo{
         font-size: 4em; 
     }
@@ -34,6 +35,7 @@ body{
 
 #polinomios{
     background-color: #7D8491;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,6 +43,7 @@ body{
     gap: 0.1em;
     width: 100%;
     font-size: 1.5em;
+    padding-bottom: 3%;
 
     .titulo{
         font-size: 3em;

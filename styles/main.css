@@ -16,7 +16,8 @@ body {
   justify-content: center;
   align-items: center;
   gap: 0em;
-  width: 80%; }
+  width: 80%;
+  height: auto; }
   #home .titulo {
     font-size: 4em; }
   #home .home-parrafo {
@@ -26,13 +27,15 @@ body {
 
 #polinomios {
   background-color: #7D8491;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.1em;
   width: 100%;
-  font-size: 1.5em; }
+  font-size: 1.5em;
+  padding-bottom: 3%; }
   #polinomios .titulo {
     font-size: 3em;
     margin-bottom: 0.2em; }

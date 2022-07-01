@@ -278,6 +278,64 @@ export class Polinomio{
         return res;
     }
 
-    
+    positividad(){
+        let res = "";
+        const coef_ppal = this.coeffs[this.grado];
+        let raices = Object.keys(this.raices());
+        raices.sort(function(a,b){return a - b;});
+        if(raices.length == 0){
+            coef_ppal > 0?  res = res + " \\mathbb{R} " : res = res + "  \\emptyset  ";
+        }else{
+            let r1 = parseFloat(raices[0]);
+            this.evaluar(r1-1) > 0?  res = res + " (-\\infty; " + r1 + ")" : res = res;
+            let r2 = parseFloat(raices[0]);
+            let tmp = 0;
+            for (let i = 1; i < raices.length; i++) {
+                r2 = parseFloat(raices[i]);
+                tmp = r1+r2;
+                tmp = (r1+r2)/2;
+                if(this.evaluar(tmp)>0){
+                    res != ""? res = res + "\\bigcup (" + r1 + "; " + r2 + ")" : res = res +  "(" + r1 + "; " + r2 + ")";
+                }
+                r1 = r2;
+                }
+                if(this.evaluar(r2+1)>0){
+                    res != ""? res = res + "\\bigcup (" + r2 + "; + \\infty)" :  res = res +  "(" + r2 + "; +\\infty)";
+                }
+        }
+        
+        res == ""? res = res + "\\( C^{+} =  \\emptyset  \\)" : res = "\\( C^{+} = " + res + "\\)";
+        return res;
+    }
+
+    negatividad(){
+        let res = "";
+        const coef_ppal = this.coeffs[this.grado];
+        let raices = Object.keys(this.raices());
+        raices.sort(function(a,b){return a - b;});
+        if(raices.length == 0){
+            coef_ppal < 0?  res = res + " \\mathbb{R} " : res = res + "  \\emptyset  ";
+        }else{
+            let r1 = parseFloat(raices[0]);
+            this.evaluar(r1-1) < 0?  res = res + " (-\\infty; " + r1 + ")" : res = res;
+            let r2 = parseFloat(raices[0]);
+            let tmp = 0;
+            for (let i = 1; i < raices.length; i++) {
+                r2 = parseFloat(raices[i]);
+                tmp = r1+r2;
+                tmp = (r1+r2)/2;
+                if(this.evaluar(tmp)<0){
+                    res != ""? res = res + "\\bigcup (" + r1 + "; " + r2 + ")" : res = res +  "(" + r1 + "; " + r2 + ")";
+                }
+                r1 = r2;
+                }
+                if(this.evaluar(r2+1)<0){
+                    res != ""? res = res + "\\bigcup (" + r2 + "; + \\infty)" :  res = res +  "(" + r2 + "; +\\infty)";
+                }
+        }
+        
+        res == ""? res = res + "\\( C^{-} =  \\emptyset  \\)" : res = "\\( C^{-} = " + res + "\\)";
+        return res;
+    }
   
 }

@@ -2,5 +2,7 @@
     { "grado": 0 , "coeffs": {"0": 1} },
     { "grado": 1, "coeffs": {"1": 1} },
     { "grado": 2, "coeffs": {"2": 1} },
-    { "grado": 2, "coeffs": {"2": 1, "0":-1}}
+    { "grado": 2, "coeffs": {"2": 2, "1":-1}},
+    { "grado": 2, "coeffs": {"2": 1, "0": 1}}
+    
 ]

@@ -374,6 +374,22 @@ function cargar(){
             div.appendChild(p_raices);
         }
 
+        if(Cpos){
+            let p_pos = document.createElement("p");
+            p_pos.classList.add("poli_" + i);
+            let positividad = document.createTextNode(poly_obj.positividad());
+            p_pos.appendChild(positividad);
+            div.appendChild(p_pos);
+        }
+
+        if(Cneg){
+            let p_neg = document.createElement("p");
+            p_neg.classList.add("poli_" + i);
+            let negatividad = document.createTextNode(poly_obj.negatividad());
+            p_neg.appendChild(negatividad);
+            div.appendChild(p_neg);
+        }
+
         if(factorizada){
             let p4 = document.createElement("p");
             p4.classList.add("poli_" + i);
@@ -405,6 +421,8 @@ function cargar(){
     }
    
 }
+
+
 let polinomios_ejemplos = [] // lista donde agrego los polinomios que carga el usuario
 fetch('ejemplos.json')
     .then((resp)=>(resp.json()))
@@ -413,8 +431,11 @@ fetch('ejemplos.json')
             let p = new Polinomio(data[i].coeffs);
             polinomios_ejemplos.push(p);
         }
+
     }
 )
+
+
 
 
 

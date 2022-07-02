@@ -243,38 +243,43 @@ function coeficientesEnteros(poly_obj){
 
 function strFactorizada(poly_obj){
     let res = "";
-    let rs = poly_obj.raices();
-    for(let [raiz, mult] of Object.entries(rs)){
-        let tmp = "";
-        if(raiz < 0){
-            tmp = "(x + " + -raiz +")";
-        }else if(raiz == 0){
-            tmp = "x";
-        }else{
-            tmp = "(x - " + raiz +")";
-        }
-        if(mult > 1){
-            tmp = tmp + "^{" + mult + "}";
-        }
-        res = res.concat(tmp);
-        while(mult != 0){
-            poly_obj = ruffini(poly_obj,raiz);
-            mult--;
-        }
-      }
-      const str_sinRaices = poly_obj.poliToString(); 
-      
-      if(str_sinRaices.includes("x") == false){
-        if(str_sinRaices != '1'){
-            res = str_sinRaices + res;
-        }else{
-            if(res ===""){
-                res = str_sinRaices + res;
+    if(poly_obj.grado==0){
+        res = poly_obj.poliToString();
+    }else{
+        let rs = poly_obj.raices();
+        for(let [raiz, mult] of Object.entries(rs)){
+            let tmp = "";
+            if(raiz < 0){
+                tmp = "(x + " + -raiz +")";
+            }else if(raiz == 0){
+                tmp = "x";
+            }else{
+                tmp = "(x - " + raiz +")";
             }
-        }
-      }else{
-        res = res + "(" + str_sinRaices + ")";
-      }
+            if(mult > 1){
+                tmp = tmp + "^{" + mult + "}";
+            }
+            res = res.concat(tmp);
+            while(mult != 0){
+                poly_obj = ruffini(poly_obj,raiz);
+                mult--;
+            }
+          }
+          const str_sinRaices = poly_obj.poliToString(); 
+
+          if(str_sinRaices.includes("x") == false){
+            if(str_sinRaices != '1'){
+                res = str_sinRaices + res;
+            }else{
+                if(res ===""){
+                    res = str_sinRaices + res;
+                }
+            }
+          }else{
+            res = res + "(" + str_sinRaices + ")";
+          }
+    }
+    
     return res;
 }
 
@@ -366,7 +371,11 @@ function cargar(){
             if(C0_text == ""){
                 C0_text = C0_text + "\\( C_{0} = \\emptyset  \\)";
             }else{
-                C0_text =  "\\( C_{0} =  \\)" + "{" + C0_text + "}";
+                if(poly_obj.grado==0){
+                    C0_text =  "\\( C_{0} =    \\mathbb{R}  \\)";    
+                }else{
+                    C0_text =  "\\( C_{0} =  \\)" + "{" + C0_text + "}";
+                }
             }
             console.log(C0_text)
             let ceros = document.createTextNode(C0_text);

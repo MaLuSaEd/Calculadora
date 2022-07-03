@@ -81,7 +81,6 @@ function cargar(){
                     C0_text =  "\\( C_{0} =  \\)" + "{" + C0_text + "}";
                 }
             }
-            console.log(C0_text)
             let ceros = document.createTextNode(C0_text);
             p_raices.appendChild(ceros);
             div.appendChild(p_raices);
